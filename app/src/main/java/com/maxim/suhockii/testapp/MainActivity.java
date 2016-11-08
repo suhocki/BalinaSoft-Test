@@ -1,7 +1,10 @@
 package com.maxim.suhockii.testapp;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -9,19 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.GridView;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.maxim.suhockii.testapp.Constants.IDS_FOR_CATEGORIES;
-import static com.maxim.suhockii.testapp.Constants.IMAGES_FOR_CATEGORIES;
-import static com.maxim.suhockii.testapp.Constants.STRINS_FOR_CATEGORIES;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-    private List<Category> categories;
-    private GridView gridView;
+        implements NavigationView.OnNavigationItemSelectedListener,
+        CategoriesFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +24,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        fillCategories();
-        gridView = (GridView) findViewById(R.id.gridView);
-        gridView.setAdapter(new ImageAdapter(this, R.layout.adapter_grid_view, this.categories));
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -42,19 +34,18 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        loadFragment();
     }
 
-    private void fillCategories() {
-        this.categories = new ArrayList<>();
-
-        for (int i = 0; i < IDS_FOR_CATEGORIES.length; i++) {
-            this.categories.add(new Category(
-                    IMAGES_FOR_CATEGORIES[i],
-                    STRINS_FOR_CATEGORIES[i],
-                    IDS_FOR_CATEGORIES[i])
-            );
-        }
+    private void loadFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.container, new CategoriesFragment());
+        fragmentTransaction.commit();
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -95,5 +86,10 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

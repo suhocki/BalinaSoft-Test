@@ -6,24 +6,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.maxim.suhockii.testapp.MainActivity"
-    tools:showIn="@layout/app_bar_main">
-
-
-
+    tools:context="com.maxim.suhockii.testapp.CategoriesFragment"
+    android:background="@android:color/background_light">
+    <!--tools:showIn="@layout/app_bar_main">-->
 
     <GridView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/gridView"
         style="@android:style/Widget.DeviceDefault.GridView"
-        android:horizontalSpacing="16dp"
-        android:verticalSpacing="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
         android:gravity="center"
-        android:paddingTop="16dp"
+        android:horizontalSpacing="16dp"
+        android:numColumns="@integer/numColumns"
         android:paddingBottom="16dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:clipToPadding="false"
-        android:numColumns="@integer/numColumns" />
+        android:paddingTop="16dp"
+        android:verticalSpacing="16dp"
+        android:scrollIndicators="none"
+        android:scrollbars="none" />
 </RelativeLayout>

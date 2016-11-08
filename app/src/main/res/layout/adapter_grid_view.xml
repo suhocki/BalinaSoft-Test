@@ -9,7 +9,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_dessert"
+        app:srcCompat="@mipmap/ic_launcher"
         android:id="@+id/iv_adapter"
         android:layout_gravity="center"
         android:layout_margin="4dp" />

@@ -14,15 +14,15 @@ import java.util.List;
  * Created by hzkto on 11/7/2016.
  */
 
-public class ImageAdapter extends BaseAdapter {
+public class GridViewAdapter extends BaseAdapter {
     private Context context;
-    private int resource;
+    private int layout;
     private LayoutInflater layoutInflater;
     List<Category> categories;
 
-    public ImageAdapter(Context context, int resource, List<Category> categories) {
+    public GridViewAdapter(Context context, List<Category> categories) {
         this.context = context;
-        this.resource = resource;
+        this.layout = R.layout.adapter_grid_view;
         this.layoutInflater = LayoutInflater.from(context);
         this.categories = categories;
     }
@@ -42,7 +42,8 @@ public class ImageAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
         if (convertView == null) {
-            view = this.layoutInflater.inflate(this.resource, parent, false);
+            this.layout = R.layout.adapter_grid_view;
+            view = this.layoutInflater.inflate(this.layout, parent, false);
         } else {
             view = convertView;
         }
