@@ -1,12 +1,24 @@
-package com.maxim.suhockii.testapp;
+package com.maxim.suhockii.testapp.fragments;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.maxim.suhockii.testapp.DBSingletone;
+import com.maxim.suhockii.testapp.R;
+import com.maxim.suhockii.testapp.adapters.RecyclerViewAdapter;
+import com.maxim.suhockii.testapp.catalog.YmlCatalog;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -20,57 +32,69 @@ import android.view.ViewGroup;
 public class DishesFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public static final String ARG_PARAM = "position";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private int position;
 
     private OnFragmentInteractionListener mListener;
+
+    private RecyclerView recyclerView;
+    private YmlCatalog catalog;
+    private RecyclerViewAdapter recyclerViewAdapter;
 
     public DishesFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DishesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DishesFragment newInstance(String param1, String param2) {
-        DishesFragment fragment = new DishesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    /**
+//     * Use this factory method to create a new instance of
+//     * this fragment using the provided parameters.
+//     *
+//     * @param param1 Parameter 1.
+//     * @param param2 Parameter 2.
+//     * @return A new instance of fragment DishesFragment.
+//     */
+//    TODO: Rename and change types and number of parameters
+//    public static DishesFragment newInstance(String param1, String param2) {
+//        DishesFragment fragment = new DishesFragment();
+//        Bundle args = new Bundle();
+//        args.putString(ARG_PARAM, param1);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dishes, container, false);
+        if (getArguments() != null) {
+            position = getArguments().getInt(ARG_PARAM);
+        }
+
+        View view = inflater.inflate(R.layout.fragment_dishes, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        try {
+            recyclerViewAdapter = new RecyclerViewAdapter(getContext(), new ArrayList(DBSingletone.getHelper().getCategoryDAO().queryForId((long) position).offers));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(recyclerViewAdapter);
+        Toast.makeText(getContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentDishesInteraction(uri);
         }
     }
 
@@ -103,6 +127,6 @@ public class DishesFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentDishesInteraction(Uri uri);
     }
 }

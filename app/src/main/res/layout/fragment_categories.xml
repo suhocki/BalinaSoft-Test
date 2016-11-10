@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.maxim.suhockii.testapp.CategoriesFragment"
+    tools:context="com.maxim.suhockii.testapp.fragments.CategoriesFragment"
     android:background="@android:color/background_light">
     <!--tools:showIn="@layout/app_bar_main">-->
 

@@ -1,13 +1,18 @@
-package com.maxim.suhockii.testapp;
+package com.maxim.suhockii.testapp.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+
+import com.maxim.suhockii.testapp.CategoryForAdapter;
+import com.maxim.suhockii.testapp.Constants;
+import com.maxim.suhockii.testapp.adapters.GridViewAdapter;
+import com.maxim.suhockii.testapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +34,7 @@ public class CategoriesFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public static final String TAG = "CategoriesFragment";
 
     // TODO: Rename and change types of parameters
     private String param1;
@@ -37,7 +42,7 @@ public class CategoriesFragment extends Fragment {
 
     private OnFragmentInteractionListener listener;
 
-    private List<Category> categories;
+    private List<CategoryForAdapter> categories;
     private GridView gridView;
     private GridViewAdapter gridViewAdapter;
 
@@ -58,7 +63,6 @@ public class CategoriesFragment extends Fragment {
         CategoriesFragment fragment = new CategoriesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -68,7 +72,6 @@ public class CategoriesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             param1 = getArguments().getString(ARG_PARAM1);
-            param2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -81,15 +84,21 @@ public class CategoriesFragment extends Fragment {
         gridViewAdapter = new GridViewAdapter(view.getContext(), this.categories);
         gridView = (GridView) view.findViewById(R.id.gridView);
         gridView.setAdapter(gridViewAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getContext(), String.valueOf(gridViewAdapter.getItemId(position)), Toast.LENGTH_SHORT).show();
+                onItemPressed(Constants.IDS_FOR_CATEGORIES[position]);
+            }
+        });
         return view;
-//        return inflater.inflate(R.layout.fragment_categories, container, false);
     }
 
     private void fillCategories() {
         this.categories = new ArrayList<>();
 
         for (int i = 0; i < IDS_FOR_CATEGORIES.length; i++) {
-            this.categories.add(new Category(
+            this.categories.add(new CategoryForAdapter(
                     IMAGES_FOR_CATEGORIES[i],
                     STRINS_FOR_CATEGORIES[i],
                     IDS_FOR_CATEGORIES[i])
@@ -98,9 +107,18 @@ public class CategoriesFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onItemPressed(int position) {
         if (listener != null) {
-            listener.onFragmentInteraction(uri);
+            DishesFragment dishesFragment = new DishesFragment();
+
+//            listener.onFragmentCategoriesInteraction(position);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, dishesFragment)
+                    .addToBackStack(null)
+                    .commit();
+            Bundle bundle = new Bundle();
+            bundle.putInt(DishesFragment.ARG_PARAM, position);
+            dishesFragment.setArguments(bundle);
         }
     }
 
@@ -133,6 +151,6 @@ public class CategoriesFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentCategoriesInteraction(int position);
     }
 }

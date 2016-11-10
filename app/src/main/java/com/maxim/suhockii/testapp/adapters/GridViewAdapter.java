@@ -1,4 +1,4 @@
-package com.maxim.suhockii.testapp;
+package com.maxim.suhockii.testapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.maxim.suhockii.testapp.CategoryForAdapter;
+import com.maxim.suhockii.testapp.R;
 
 import java.util.List;
 
@@ -18,9 +21,9 @@ public class GridViewAdapter extends BaseAdapter {
     private Context context;
     private int layout;
     private LayoutInflater layoutInflater;
-    List<Category> categories;
+    List<CategoryForAdapter> categories;
 
-    public GridViewAdapter(Context context, List<Category> categories) {
+    public GridViewAdapter(Context context, List<CategoryForAdapter> categories) {
         this.context = context;
         this.layout = R.layout.adapter_grid_view;
         this.layoutInflater = LayoutInflater.from(context);

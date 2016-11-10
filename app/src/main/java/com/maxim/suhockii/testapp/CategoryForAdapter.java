@@ -4,12 +4,12 @@ package com.maxim.suhockii.testapp;
  * Created by hzkto on 11/7/2016.
  */
 
-public class Category {
+public class CategoryForAdapter {
     private int imageResource;
     private String text;
     private int id;
 
-    public Category(Integer imageResource, String text, int id) {
+    public CategoryForAdapter(Integer imageResource, String text, int id) {
         this.imageResource = imageResource;
         this.text = text;
         this.id = id;
