@@ -11,7 +11,7 @@
     <!--tools:showIn="@layout/app_bar_main">-->
 
     <GridView
-        android:id="@+id/gridView"
+        android:id="@+id/grid_view"
         style="@android:style/Widget.DeviceDefault.GridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

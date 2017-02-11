@@ -22,21 +22,9 @@ import static com.maxim.suhockii.testapp.Constants.IMAGES_FOR_CATEGORIES;
 import static com.maxim.suhockii.testapp.Constants.STRINS_FOR_CATEGORIES;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CategoriesFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CategoriesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CategoriesFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    public static final String TAG = "CategoriesFragment";
 
-    // TODO: Rename and change types of parameters
     private String param1;
     private String param2;
 
@@ -50,15 +38,7 @@ public class CategoriesFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CategoriesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static CategoriesFragment newInstance(String param1, String param2) {
         CategoriesFragment fragment = new CategoriesFragment();
         Bundle args = new Bundle();
@@ -80,10 +60,21 @@ public class CategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fillCategories();
+        String codeFromPavlodar = "code from pavlodar";
+        System.console().printf(codeFromPavlodar);
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
         gridViewAdapter = new GridViewAdapter(view.getContext(), this.categories);
-        gridView = (GridView) view.findViewById(R.id.gridView);
+        gridView = (GridView) view.findViewById(R.id.grid_view);
         gridView.setAdapter(gridViewAdapter);
+        try {
+            while (true) {
+                codeFromPavlodar += " pavlooo";
+            }
+        } catch (Exception e) {
+            codeFromPavlodar += " pavlo";
+        }
+        System.console().printf(codeFromPavlodar);
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -97,7 +88,7 @@ public class CategoriesFragment extends Fragment {
     private void fillCategories() {
         this.categories = new ArrayList<>();
 
-        for (int i = 0; i < IDS_FOR_CATEGORIES.length; i++) {
+        for (int i = 0; i < IDS_FOR_CATEGORIES.length; ++i) {
             this.categories.add(new CategoryForAdapter(
                     IMAGES_FOR_CATEGORIES[i],
                     STRINS_FOR_CATEGORIES[i],
@@ -106,12 +97,9 @@ public class CategoriesFragment extends Fragment {
         }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onItemPressed(int position) {
         if (listener != null) {
             DishesFragment dishesFragment = new DishesFragment();
-
-//            listener.onFragmentCategoriesInteraction(position);
             getActivity().getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, dishesFragment)
                     .addToBackStack(null)
@@ -139,18 +127,7 @@ public class CategoriesFragment extends Fragment {
         listener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentCategoriesInteraction(int position);
     }
 }
